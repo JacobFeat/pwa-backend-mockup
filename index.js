@@ -8,6 +8,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server started at http://localhost:${port}`);
@@ -57,7 +58,7 @@ app.post('/notifications/send', (req, res) => {
       notification: {
         title: req.body.title,
         body: req.body.description,
-        image: "https://thumbs.dreamstime.com/b/angular-logo-editorial-illustrative-white-background-angular-logo-editorial-illustrative-white-background-eps-download-208329119.jpg"
+        image: "http://localhost:3000/image.jpg"
       }
     }))
   );
