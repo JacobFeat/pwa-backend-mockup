@@ -9,11 +9,16 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server started at http://localhost:${port}`);
 });
 
-const vapidKeys = webPush.generateVAPIDKeys();
+
+const vapidKeys = {
+  publicKey: 'BCktAlsTxEKwTV7scYU-f45yGsPZSdMs9rO0zqEYjxcg5jtWMTJ0oX1iVCyUyoybG8s8q1SnP9XgpmF1YhTCe_U',
+  privateKey: 'LlHhvrzCHJZC8eRBqBd-al5-AuEdz8Qhwn961DaJOwQ'
+};
+
 
 app.get('/vapidPublicKey', (req, res) => {
   res.send(vapidKeys.publicKey);
