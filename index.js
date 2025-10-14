@@ -66,6 +66,18 @@ app.post('/notifications/send', (req, res) => {
     .then(() => res.status(200).json({ message: 'Notification sent successfully.' }))
     .catch(err => {
       console.error('Error sending notification, reason: ', err);
+      
+      // If subscription is expired (410), remove it from subscriptions
+      if (err.statusCode === 410) {
+        const invalidEndpoint = err.endpoint;
+        const index = subscriptions.findIndex(sub => sub.endpoint === invalidEndpoint);
+        if (index > -1) {
+          subscriptions.splice(index, 1);
+          console.log('Removed expired subscription:', invalidEndpoint);
+        }
+        return res.status(200).json({ message: 'Notification sent to valid subscriptions. Expired subscription removed.' });
+      }
+      
       res.sendStatus(500);
     });
 });
